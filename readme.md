@@ -8,7 +8,7 @@
  then the image will be sent to api, results will come up after seconds.
 4. If you want to change the image for testing, please replace the IMG_NAME in image_sender.py to the image that you put in the same directory.
 
-## dependency
+## Dependency
 ```
 pip install requests 
 pip install json 
