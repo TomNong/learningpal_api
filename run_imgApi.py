@@ -3,7 +3,7 @@ import json
 from time import sleep
 import multiprocessing
 
-IMG_NAMES = ["commonmath.png"]
+IMG_NAMES = ["homework.jpg"]
 
 
 def worker(IMG_NAME):

@@ -3,7 +3,7 @@ import json
 from time import sleep
 
 
-IMG_NAME = "commonmath.png"
+IMG_NAME = "single_equation.png"
 
 
 url = 'http://api.learningpal.com/math/upload'
