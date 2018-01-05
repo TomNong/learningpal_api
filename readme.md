@@ -3,7 +3,7 @@ This repository includes:
   2. Math equation detection in a single image API
   3. Using above two API to achieve problem sheet auto grading
 
-## For usage of Handwritten math equation recognition API
+## For Usage of Handwritten math equation recognition API
 You can use provided image to test.
 If you want to change the image for testing, please replace the IMG_NAME in image_sender.py to the image that you put in the same directory.
 
@@ -29,4 +29,21 @@ Replace handwritten images as you like
 
 note: image resize to height of 50 pixs is recommended
 
+## For Usage of Math equation detection in a single image API
+### Example
+```
+python run_imgApi.py
+```
+###### Output returns a list of [(x1,y1),(x2,y2)] box location coordinates
+
+## For Problem Sheet Auto Grading
+### Example
+Testing on problem sheet image
+![alt text](https://github.com/TomNong/learningpal_api/blob/master/homework.png?raw=true)
+```
+python recognize_hw.py homework.png
+```
+###### The program draws boxes on detected math equtions on image, and put recognized text on the image, and output as result.png
+
+![alt text](https://github.com/TomNong/learningpal_api/blob/master/result.png?raw=true)
 
