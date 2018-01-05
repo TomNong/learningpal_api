@@ -34,7 +34,8 @@ note: image resize to height of 50 pixs is recommended
 ```
 python run_imgApi.py
 ```
-###### Output returns a list of [(x1,y1),(x2,y2)] box location coordinates
+###### Output 
+returns a list of [(x1,y1),(x2,y2)] box location coordinates
 
 ## For Problem Sheet Auto Grading
 ### Example
@@ -43,7 +44,8 @@ Testing on problem sheet image
 ```
 python recognize_hw.py homework.png
 ```
-###### The program draws boxes on detected math equtions on image, and put recognized text on the image, and output as result.png
+###### Output
+The program draws boxes on detected math equtions on image, and put recognized text on the image, and output as result.png
 
 ![alt text](https://github.com/TomNong/learningpal_api/blob/master/result.png?raw=true)
 
