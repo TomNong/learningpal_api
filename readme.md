@@ -3,17 +3,17 @@ This repository includes:
   2. Math equation detection in a single image API
   3. Using above two API to achieve problem sheet auto grading
 
-# For usage of Handwritten math equation recognition API
+## For usage of Handwritten math equation recognition API
 You can use provided image to test.
 If you want to change the image for testing, please replace the IMG_NAME in image_sender.py to the image that you put in the same directory.
 
-## Dependency
+### Dependency
 ```
 pip install requests 
 pip install json 
 ```
 
-## Example
+### Example
 
 ![alt text](https://github.com/TomNong/learningpal_api/blob/master/single_equation.png?raw=true)
 
