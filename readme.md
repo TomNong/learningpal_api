@@ -53,6 +53,10 @@ The program draws boxes on detected math equtions on image, and put recognized t
 
 
 # Update
+
+![alt text](https://github.com/TomNong/learningpal_api/blob/master/math_hw.jpg?raw=true)
+
+
 ```
 python grading.py math_hw.jpg
 ```
