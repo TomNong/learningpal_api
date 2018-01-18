@@ -4,14 +4,14 @@ import time
 def worker(IMG_NAME):
     
     try:
-        url = "http://34.234.219.245:8500/upload_for_grading"
+        url = "http://api.learningpal.com:12500/upload_for_grading"
         files = {'file': open('./' + IMG_NAME, 'rb')}
-        headers = {'content-type': 'application/json','Connection':'close'}
+        headers = {'content-type': 'application/json','Connection':'close', 'Cache-Control': 'no-cache'}
         r = requests.post(url, files=files)
         response1 = json.loads(r.text)
         task_ID = response1['task_ID']
         payload = {'task_ID' : task_ID, 'password' : ""}
-        url2 = 'http://34.234.219.245:8500/result'
+        url2 = 'http://api.learningpal.com:12500/result'
         while True:
             response2 = requests.post(url2, data=json.dumps(payload), headers=headers)
             result = json.loads(response2.text)
@@ -21,7 +21,7 @@ def worker(IMG_NAME):
             print 'Job is running...'
         return result
     except Exception as e :
-        print e
+        print 'except: ', e
         
 
 def main(arg):
