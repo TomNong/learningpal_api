@@ -22,6 +22,6 @@ try:
     print response.text
     if response.text and "processing" not in response.text:
     	break
-    sleep(5)
+    #sleep(5)
 except Exception as e :
 	print e
