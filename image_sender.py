@@ -1,10 +1,10 @@
 import requests
-import json
-from time import sleep
+import json, time
 
 
 IMG_NAME = "single_equation.png"
 
+tic = time.time()
 
 url = 'http://api.learningpal.com/math/upload'
 files = {'file': open('./' + IMG_NAME, 'rb')}
@@ -22,6 +22,6 @@ try:
     print response.text
     if response.text and "processing" not in response.text:
     	break
-    #sleep(5)
 except Exception as e :
 	print e
+print 'total time cost: ', time.time()-tic
