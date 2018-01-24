@@ -73,17 +73,22 @@ The result JSON includes all problems in the paper that has been detected and re
 import Foundation
 let url_str = "http://api.learningpal.com/math/upload"
 let headers = ["content-type": "application/json"]
-var request = URLRequest(url: NSURL(string: url_str)! as URL)
+let request = URLRequest(url: NSURL(string: url_str)! as URL)
+
 request.httpMethod = "POST"
 for (key, value) in headers {request.addValue(value, forHTTPHeaderField: key)}
+
 var body = NSMutableData()
-for (key, value) in post_data {
-      body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
-      body.append("Content-Disposition:form-data;name=\"\(key)\"\r\n\r\n".data(using: String.Encoding.utf8)!)
-      body.append("\(value)\r\n".data(using: String.Encoding.utf8)!)
-}
+fname = 'whatevernameyouwant.png'
+image_data = UIImageJPEGRepresentation(img, 0.6) //note: img is your image
+boundary = "Boundary-\(NSUUID().uuidString)"
+body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
+body.append("Content-Disposition:form-data;name=\"\(fname)\"\r\n\r\n".data(using: String.Encoding.utf8)!)
+body.append("\(image)\r\n".data(using: String.Encoding.utf8)!)
 body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
+
 request.httpBody = body as Data
+
 let session = URLSession.shared
 let task = session.dataTask(with: request as URLRequest) {
     (data, response, error) in
@@ -92,7 +97,7 @@ let task = session.dataTask(with: request as URLRequest) {
             print("error occurs: ", error)
             return
     }
-    completion(data)
+    let response = String(data: data!, encoding: String.Encoding(rawValue: String.Encoding.utf8.rawValue))
 }
 task.resume()
 ```
