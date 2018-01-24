@@ -1,8 +1,7 @@
 import requests, json, time, multiprocessing, sys, signal
 
 def recognize(IMG_NAME):
-#    url = 'http://api.learningpal.com/math/upload'
-    url = 'http://34.229.216.102/math/upload'
+    url = 'http://api.learningpal.com/math/upload'
     files = {'file': open('./' + IMG_NAME, 'rb')}
     headers = {'content-type': 'application/json'}
     try:
@@ -11,8 +10,7 @@ def recognize(IMG_NAME):
         response = json.loads(r.text)
         task_ID = response['task_ID']
         payload = {'task_ID' : task_ID, 'password' : ""}
-#        url2 = 'http://api.learningpal.com/math/result'
-        url2 = 'http://34.229.216.102/math/result'
+        url2 = 'http://api.learningpal.com/math/result'
         while True:
             response = requests.post(url2, data=json.dumps(payload), headers=headers)
             print response.text
