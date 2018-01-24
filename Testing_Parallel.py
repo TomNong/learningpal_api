@@ -1,4 +1,4 @@
-import requests, json, time, multiprocessing, sys
+import requests, json, time, multiprocessing, sys, signal
 
 def recognize(IMG_NAME):
 #    url = 'http://api.learningpal.com/math/upload'
@@ -48,8 +48,15 @@ def main(arg):
     tasks = tasks[:(int(arg))]
     print '    number of sending images: ', len(tasks)
     results = pool.map(recognize, tasks)
+    pool.close()
+    pool.join()
     print results
     print '    Done! Time cost: ', str(time.time() - tic), 's'
         
+def quit(signum, frame):
+    print 'Stop'
+    sys.exit()
 if __name__=="__main__":
+    signal.signal(signal.SIGINT, quit)
+    signal.signal(signal.SIGTERM, quit)
     main(sys.argv[1])
