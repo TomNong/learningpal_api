@@ -72,36 +72,113 @@ The result JSON includes all problems in the paper that has been detected and re
 
 
 ## API calling guide
-#### Swift3.0+
-```
+#### Call from Swift3.0+ sample
+```javascript
+import UIKit
 import Foundation
-let url_str = "http://api.learningpal.com/math/upload"
-let headers = ["content-type": "application/json"]
-let request = URLRequest(url: NSURL(string: url_str)! as URL)
 
-request.httpMethod = "POST"
-for (key, value) in headers {request.addValue(value, forHTTPHeaderField: key)}
+class ViewController: UIViewController {
 
-var body = NSMutableData()
-fname = 'whatevernameyouwant.png'
-image_data = UIImageJPEGRepresentation(img, 0.6) //note: img is your image
-boundary = "Boundary-\(NSUUID().uuidString)"
-body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
-body.append("Content-Disposition:form-data;name=\"\(fname)\"\r\n\r\n".data(using: String.Encoding.utf8)!)
-body.append("\(image)\r\n".data(using: String.Encoding.utf8)!)
-body.append("--\(boundary)--\r\n".data(using: String.Encoding.utf8)!)
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let img = #imageLiteral(resourceName: "test_img")
+        let url_str = "http://api.learningpal.com/math/upload"
+        let url_str_res = "http://api.learningpal.com/math/result"
 
-request.httpBody = body as Data
-
-let session = URLSession.shared
-let task = session.dataTask(with: request as URLRequest) {
-    (data, response, error) in
-    guard let _:Data = data, let _:URLResponse = response , error
-        == nil else {
-            print("error occurs: ", error)
-            return
+        data_request_multipart(url_str, img, completion: { respond in
+            let taskID = respond
+            self.Get_result_request(taskID as! String, url_str_res, fulfill: { (respond) in
+                print("res: ", respond)
+            }, reject:{ error in
+                print("error: ", error)
+            })
+        })
     }
-    let response = String(data: data!, encoding: String.Encoding(rawValue: String.Encoding.utf8.rawValue))
+    
+    func data_request_multipart(_ url:String, _ data:UIImage, completion: @escaping (_ result: Any) -> Void) {
+        var task_ID = String()
+        let post_url = NSURL(string: url)
+        var request = URLRequest(url: post_url! as URL)
+        let boundary = "Boundary-\(NSUUID().uuidString)"
+        let image_data = UIImageJPEGRepresentation(data, 0.8)
+        let fname = "name.jpg"
+        let mimetype = "image/png"
+        let body = NSMutableData()
+        body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
+        body.append("Content-Disposition:form-data;name=\"photo\"\r\n\r\n".data(using: String.Encoding.utf8)!)
+        body.append("Incoming\r\n".data(using: String.Encoding.utf8)!)
+        body.append("--\(boundary)\r\n".data(using: String.Encoding.utf8)!)
+        body.append("Content-Disposition:form-data; name=\"file\";filename=\"\(fname)\"\r\n".data(using: String.Encoding.utf8)!)
+        body.append("Content-Type: \(mimetype)\r\n\r\n".data(using:
+            String.Encoding.utf8)!)
+        body.append(image_data!)
+        body.append("\r\n".data(using: String.Encoding.utf8)!)
+        body.append("--\(boundary)--\r\n".data(using:
+            String.Encoding.utf8)!)
+        
+        request.httpMethod = "POST"
+        request.httpBody = body as Data
+        request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+        request.cachePolicy = .reloadIgnoringLocalCacheData
+        request.httpShouldHandleCookies = false
+        request.timeoutInterval = 60
+        
+        let session = URLSession.shared
+        let task = session.dataTask(with: request as URLRequest) {
+            (
+            data, response, error) in
+            guard let _:Data = data, let _:URLResponse = response , error
+                == nil else {
+                    print("error", error)
+                    return
+            }
+            if let res_json = try! JSONSerialization.jsonObject(with: data!, options: []) as? [String: Any] {
+                task_ID = res_json["task_ID"] as! String
+                completion(task_ID)
+            }
+        }
+        task.resume()
+    }
+    
+    func Get_result_request(_ taskID: String, _ url: String, maxRetries: Int = 10, attempt: Int=0, fulfill: @escaping (_ result:Any)->Void, reject: @escaping (Error)->Void){
+        guard attempt < maxRetries else {
+            reject(RetryError.tooManyRetries)
+            return
+        }
+        var final_res = [String:Any]()
+        var isResult = "false"
+        let json: [String: Any] = ["task_ID": taskID, "password": "nopassword"]
+        let jsonData = try? JSONSerialization.data(withJSONObject: json)
+        let post_url = URL(string: url)!
+        var request = URLRequest(url: post_url)
+        request.httpMethod = "POST"
+        request.httpBody = jsonData
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        if taskID.count == 0 {return}
+        let task = URLSession.shared.dataTask(with: request) { data, response, error in
+            guard let data = data, error == nil else {
+                print(error?.localizedDescription ?? "No data")
+                return
+            }
+            if let result_json = try! JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] {
+                final_res = result_json
+                isResult = result_json["isResult"] as! String
+                if isResult == "true"{
+                    fulfill(final_res)
+                } else {
+                    self.Get_result_request(taskID, url, maxRetries: maxRetries, attempt: attempt+1, fulfill: fulfill, reject: reject)
+                }
+            }
+        }
+        
+        task.resume()
+    }
+    
+    enum RetryError: Error {
+        case tooManyRetries
+        case taskFailed
+    }
 }
-task.resume()
+
 ```
