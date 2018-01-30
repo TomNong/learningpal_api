@@ -2,7 +2,8 @@ import requests
 import json, time
 
 
-IMG_NAME = "single_equation.png"
+#IMG_NAME = "single_equation.png"
+IMG_NAME = "latex20.png"
 
 tic = time.time()
 
