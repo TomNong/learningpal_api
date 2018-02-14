@@ -23,7 +23,7 @@ try:
     print response.text
     if response.text and "processing" not in response.text:
     	break
-    time.sleep(0.5)
+    #time.sleep(10)
 except Exception as e :
 	print e
 print 'total time cost: ', time.time()-tic
