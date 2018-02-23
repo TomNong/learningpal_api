@@ -2,12 +2,12 @@ import requests
 import json, time
 
 
-#IMG_NAME = "single_equation.png"
-IMG_NAME = "t1.jpg"
+IMG_NAME = "single_equation.png"
+#IMG_NAME = "t1.jpg"
 
 tic = time.time()
 
-url = 'http://107.20.88.172/math/upload'
+url = 'http://api.learningpal.com/math/upload'
 files = {'file': open('./' + IMG_NAME, 'rb')}
 headers = {'content-type': 'application/json', 'Connection': 'close'}
 
@@ -17,7 +17,7 @@ try:
   response = json.loads(r.text)
   task_ID = response['task_ID']
   payload = {'task_ID' : task_ID, 'password' : ""}
-  url2 = 'http://107.20.88.172/math/result'
+  url2 = 'http://api.learningpal.com/math/result'
   while True:
     response = requests.post(url2, data=json.dumps(payload), headers=headers)
     print response.text
@@ -25,5 +25,5 @@ try:
     	break
     time.sleep(0.5)
 except Exception as e :
-	print e
+	print 'error occured: ', e
 print 'total time cost: ', time.time()-tic
