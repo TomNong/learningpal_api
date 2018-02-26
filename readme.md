@@ -1,11 +1,13 @@
 This repository includes:
-  1. Handwritten math equation recognition API
-  2. Math equation detection in a single image API
-  3. Using above two API to achieve problem sheet auto grading
+
++ 1. Handwritten math equation recognition API.
++ 2. Math equation detection in a single image API.
++ 3. Using above two API to achieve problem sheet auto grading.
+    
+  
 
 ## For Usage of Handwritten math equation recognition API
-You can use provided image to test.
-If you want to change the image for testing, please replace the IMG_NAME in image_sender.py to the image that you put in the same directory.
+You can use provided images to test. Provided 15 random math equations under image_test folder.
 
 ### Dependency
 ```
@@ -13,19 +15,29 @@ pip install requests
 pip install json 
 ```
 
-### Example
-
-![alt text](https://github.com/TomNong/learningpal_api/blob/master/single_equation.png?raw=true)
-
-```
-python image_sender.py 
+### Example 1
+![alt text](https://github.com/TomNong/learningpal_api/blob/master/image_test/test7.png?raw=true)
+```python
+python image_sender.py image_test/test7.png
 ```
 ###### Output:
+```json
+{"confidence": 0.8695158626779171, "isResult": "true", "result": "\\begin {cases} 5 x + 7 y + 9 x = 0 \\\\ x - y + z = - 3 \\\\ 8 x + y = 12 \\end {cases} "}
+total time cost:  3.0366871357
 ```
-u'{"confidence": 0.9945661408039893, "isResult": "true", "result": "( 3 - x ) ( x - 2 ) = 0 "}'
-```
+### Example 2
+![alt text](https://github.com/TomNong/learningpal_api/blob/master/image_test/test15.png?raw=true)
 
-Replace handwritten images as you like
+```python
+python image_sender.py image_test/test15.png
+```
+###### Output:
+```json
+{"confidence": 0.9964520237103752, "isResult": "true", "result": "( 3 - x ) ( x - 2 ) = 0 "}
+total time cost:  0.988836050034
+```
+In order to get best result, clear image with right fit in the frame is suggested, like images from image_test folder 
+
 
 ## For Usage of Math equation detection in a single image API
 ### Example
