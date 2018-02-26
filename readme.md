@@ -1,7 +1,9 @@
 This repository includes:
-  1. Handwritten math equation recognition API
-  2. Math equation detection in a single image API
-  3. Using above two API to achieve problem sheet auto grading
+
+    1. Handwritten math equation recognition API.
+    2. Math equation detection in a single image API.
+    3. Using above two API to achieve problem sheet auto grading.
+  
 
 ## For Usage of Handwritten math equation recognition API
 You can use provided images to test. Provided 15 random math equations under image_test folder
