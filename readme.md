@@ -27,8 +27,6 @@ u'{"confidence": 0.9945661408039893, "isResult": "true", "result": "( 3 - x ) ( 
 
 Replace handwritten images as you like
 
-note: image resize to height of 50 pixs is recommended
-
 ## For Usage of Math equation detection in a single image API
 ### Example
 ```
