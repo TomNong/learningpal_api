@@ -7,7 +7,7 @@ This repository includes:
   
 
 ## For Usage of Handwritten math equation recognition API
-You can use provided images to test. Provided 15 random math equations under image_test folder
+You can use provided images to test. Provided 15 random math equations under image_test folder.
 
 ### Dependency
 ```
@@ -36,7 +36,7 @@ python image_sender.py image_test/test15.png
 {"confidence": 0.9964520237103752, "isResult": "true", "result": "( 3 - x ) ( x - 2 ) = 0 "}
 total time cost:  0.988836050034
 ```
-In order to get best result, clear image with right fit in the frame is suggested.
+In order to get best result, clear image with right fit in the frame is suggested, like images from image_test folder 
 
 
 ## For Usage of Math equation detection in a single image API
