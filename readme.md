@@ -12,7 +12,7 @@ pip install requests
 pip install json 
 ```
 
-### Example
+### Example 1
 ![alt text](https://github.com/TomNong/learningpal_api/blob/master/image_test/test7.png?raw=true)
 ```python
 python image_sender.py image_test/test7.png
@@ -22,7 +22,7 @@ python image_sender.py image_test/test7.png
 {"confidence": 0.8695158626779171, "isResult": "true", "result": "\\begin {cases} 5 x + 7 y + 9 x = 0 \\\\ x - y + z = - 3 \\\\ 8 x + y = 12 \\end {cases} "}
 total time cost:  3.0366871357
 ```
-
+### Example 2
 ![alt text](https://github.com/TomNong/learningpal_api/blob/master/image_test/test15.png?raw=true)
 
 ```python
