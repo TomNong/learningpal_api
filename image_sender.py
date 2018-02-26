@@ -4,7 +4,7 @@ def main(arg):
     IMG_NAME = arg[1]
     tic = time.time()
     url = 'http://api.learningpal.com/math/upload'
-    files = {'file': open('./' + IMG_NAME, 'rb')}
+    files = {'file': open(IMG_NAME, 'rb')}
     headers = {'content-type': 'application/json', 'Connection': 'close'}
 
     try:
